@@ -55,7 +55,7 @@ class PrologixSerialDecive(DeviceBase):
     
     def send_cmd(self, cmd):
         if self._enforce_addr:
-            self.send_cmd('++addr {}'.format(self._addr))
+            self._ser.write('++addr {}'.format(self._addr).encode(self.ENCODING))
         if self._debug:
             print((cmd.strip()+self.EOL).encode(self.ENCODING))
         self._ser.write((cmd.strip()+self.EOL).encode(self.ENCODING))

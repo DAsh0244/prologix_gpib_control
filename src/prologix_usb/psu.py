@@ -1,4 +1,4 @@
-from common import PrologixSerialDecive
+from .common import PrologixSerialDecive
 from typing import Optional
 from abc import ABC, abstractmethod
 
