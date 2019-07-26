@@ -6,7 +6,7 @@ from abc import ABC, abstractmethod
 
 import serial
 
-__ver_info = (0,1,0)
+__ver_info = (0,2,0)
 __version__ = '.'.join(map(str, __ver_info))
 
 
@@ -55,7 +55,7 @@ class PrologixSerialDecive(DeviceBase):
     
     def send_cmd(self, cmd):
         if self._enforce_addr:
-            self._ser.write('++addr {}'.format(self._addr).encode(self.ENCODING))
+            self._ser.write('++addr {}{}'.format(self._addr,self.EOL).encode(self.ENCODING))
         if self._debug:
             print((cmd.strip()+self.EOL).encode(self.ENCODING))
         self._ser.write((cmd.strip()+self.EOL).encode(self.ENCODING))
