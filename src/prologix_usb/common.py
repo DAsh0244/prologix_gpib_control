@@ -5,6 +5,8 @@ from typing import Optional
 from abc import ABC, abstractmethod
 
 import serial
+from time import sleep
+
 
 __ver_info = (0,2,0)
 __version__ = '.'.join(map(str, __ver_info))
@@ -28,8 +30,12 @@ class DeviceBase(ABC):
 class PrologixSerialDecive(DeviceBase):
     def __init__(self, port:str, addr:int, baud:int=BAUD, timeout:float=TIMEOUT,
                  buf_clear:bool=True, init_prologix:bool=False, enforce_addr:bool=False, debug:bool=False):
-        self._ser = serial.Serial(port,baud,timeout=timeout)
+        if isinstance(port,serial.Serial): 
+            self._ser = port
+        else:
+            self._ser = serial.Serial(port,baud,timeout=timeout)
         atexit.register(self._ser.close)
+        self.wait = sleep
         self._addr = addr
         self._debug = debug
         self._enforce_addr = enforce_addr
